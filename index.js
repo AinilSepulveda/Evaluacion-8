@@ -16,16 +16,23 @@ dotenv.config();
 
 const app = express();
 
-// Configuracion de entorno
 const PORT = process.env.PORT || 3000;
 
-// Middlewares base
 app.use(cors());
 app.use(express.json());
 
-// Ruta base
-app.use("/test", testRoutes);
+app.get("/", (req, res) => {
+  res.status(200).json({
+    codigo: 200,
+    message: "API Clinica Modulo 8 funcionando",
+    endpoints: {
+      acerca: "/api/v1/acerca",
+      login: "/api/v1/auth/login",
+    },
+  });
+});
 
+app.use("/test", testRoutes);
 app.use("/health", healthRoutes);
 
 app.get("/paises", async (req, res, next) => {
@@ -37,8 +44,9 @@ app.get("/paises", async (req, res, next) => {
       },
     });
 
-    res.json({
-      message: "Países obtenidos correctamente",
+    res.status(200).json({
+      codigo: 200,
+      message: "Paises obtenidos correctamente",
       data: paises,
     });
   } catch (error) {
@@ -46,18 +54,13 @@ app.get("/paises", async (req, res, next) => {
   }
 });
 
-
-// Registrando authRoutes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/acerca", acercaRoutes);
 app.use("/api/v1/pacientes", pacienteRoutes);
 app.use("/api/v1/medicos", medicoRoutes);
 app.use("/api/v1/examenes", examenRoutes);
 
-// // Middleware 404
 app.use(unknownEndpoint);
-
-// Middleware global
 app.use(errorHandler);
 
 app.listen(PORT, () => {

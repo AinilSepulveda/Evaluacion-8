@@ -64,8 +64,8 @@ export const crearMedico = (req, res) => {
   );
 
   if (emailDuplicado || registroDuplicado) {
-    return res.status(409).json({
-      codigo: 409,
+    return res.status(400).json({
+      codigo: 400,
       message: "Ya existe un medico con ese email o registro medico",
     });
   }
@@ -122,8 +122,8 @@ export const actualizarMedico = (req, res) => {
   );
 
   if (duplicado) {
-    return res.status(409).json({
-      codigo: 409,
+    return res.status(400).json({
+      codigo: 400,
       message: "Ya existe otro medico con ese email o registro medico",
     });
   }

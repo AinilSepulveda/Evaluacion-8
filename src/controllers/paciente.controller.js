@@ -65,8 +65,8 @@ export const crearPaciente = (req, res) => {
   const existeRut = pacientes.some((item) => item.rut === req.body.rut);
 
   if (existeRut) {
-    return res.status(409).json({
-      codigo: 409,
+    return res.status(400).json({
+      codigo: 400,
       message: "Ya existe un paciente con ese rut",
     });
   }
@@ -122,8 +122,8 @@ export const actualizarPaciente = (req, res) => {
   );
 
   if (rutDuplicado) {
-    return res.status(409).json({
-      codigo: 409,
+    return res.status(400).json({
+      codigo: 400,
       message: "Ya existe otro paciente con ese rut",
     });
   }
