@@ -39,6 +39,12 @@ PORT=3000
 
 El proyecto usa PostgreSQL para el login de usuarios.
 
+La documentacion tecnica del backend esta en:
+
+```text
+docs/documentacion-tecnica-backend.md
+```
+
 El archivo SQL esta en:
 
 ```text

@@ -1,4 +1,5 @@
 import { pacientes } from "../data/pacientes.data.js";
+import { Paciente } from "../classes/Paciente.js";
 
 const camposObligatorios = ["nombre", "rut", "edad", "diagnostico"];
 
@@ -71,7 +72,7 @@ export const crearPaciente = (req, res) => {
     });
   }
 
-  const nuevoPaciente = {
+  const nuevoPaciente = new Paciente({
     id: pacientes.length > 0 ? Math.max(...pacientes.map((item) => item.id)) + 1 : 1,
     nombre: req.body.nombre,
     rut: req.body.rut,
@@ -80,7 +81,7 @@ export const crearPaciente = (req, res) => {
     email: req.body.email || "",
     diagnostico: req.body.diagnostico,
     previsional: req.body.previsional || "",
-  };
+  });
 
   pacientes.push(nuevoPaciente);
 
@@ -102,11 +103,11 @@ export const actualizarPaciente = (req, res) => {
     });
   }
 
-  const pacienteActualizado = {
+  const pacienteActualizado = new Paciente({
     ...pacientes[indice],
     ...req.body,
     id,
-  };
+  });
 
   const errorValidacion = validarPaciente(pacienteActualizado);
 
@@ -129,12 +130,12 @@ export const actualizarPaciente = (req, res) => {
   }
 
   pacienteActualizado.edad = Number(pacienteActualizado.edad);
-  pacientes[indice] = pacienteActualizado;
+  pacientes[indice].actualizar(pacienteActualizado);
 
   return res.status(200).json({
     codigo: 200,
     message: "Paciente actualizado correctamente",
-    data: pacienteActualizado,
+    data: pacientes[indice],
   });
 };
 

@@ -1,0 +1,13 @@
+export class Persona {
+  constructor({ id, nombre, telefono = "", email = "" }) {
+    this.id = id;
+    this.nombre = nombre;
+    this.telefono = telefono;
+    this.email = email;
+  }
+
+  actualizar(datos) {
+    Object.assign(this, datos);
+    return this;
+  }
+}

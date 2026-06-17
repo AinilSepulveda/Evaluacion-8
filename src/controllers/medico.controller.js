@@ -1,4 +1,5 @@
 import { medicos } from "../data/medicos.data.js";
+import { Medico } from "../classes/Medico.js";
 
 const camposObligatorios = ["nombre", "especialidad", "email", "registroMedico"];
 
@@ -70,14 +71,14 @@ export const crearMedico = (req, res) => {
     });
   }
 
-  const nuevoMedico = {
+  const nuevoMedico = new Medico({
     id: medicos.length > 0 ? Math.max(...medicos.map((item) => item.id)) + 1 : 1,
     nombre: req.body.nombre,
     especialidad: req.body.especialidad,
     email: req.body.email,
     telefono: req.body.telefono || "",
     registroMedico: req.body.registroMedico,
-  };
+  });
 
   medicos.push(nuevoMedico);
 
@@ -99,11 +100,11 @@ export const actualizarMedico = (req, res) => {
     });
   }
 
-  const medicoActualizado = {
+  const medicoActualizado = new Medico({
     ...medicos[indice],
     ...req.body,
     id,
-  };
+  });
 
   const errorValidacion = validarMedico(medicoActualizado);
 
@@ -128,12 +129,12 @@ export const actualizarMedico = (req, res) => {
     });
   }
 
-  medicos[indice] = medicoActualizado;
+  medicos[indice].actualizar(medicoActualizado);
 
   return res.status(200).json({
     codigo: 200,
     message: "Medico actualizado correctamente",
-    data: medicoActualizado,
+    data: medicos[indice],
   });
 };
 
