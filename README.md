@@ -2,6 +2,16 @@
 
 API REST construida con Node.js y Express para la evaluacion final del Modulo 8. Permite autenticacion con JWT, endpoints publicos, CRUD privado de pacientes y medicos en memoria, subida de examenes PDF y listado de archivos subidos al servidor.
 
+## Frontend
+
+El frontend del proyecto se encuentra en un repositorio separado:
+
+```text
+https://github.com/AinilSepulveda/FrontEnd-medecina
+```
+
+Para revisar o levantar la interfaz web, se debe usar ese repositorio. Este repositorio corresponde solo al backend API.
+
 ## Tecnologias
 
 - Node.js

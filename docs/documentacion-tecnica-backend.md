@@ -21,6 +21,14 @@ El backend incluye:
 
 El frontend se desarrolla en otro repositorio y consume esta API por HTTP.
 
+Repositorio frontend:
+
+```text
+https://github.com/AinilSepulveda/FrontEnd-medecina
+```
+
+Este repositorio backend no contiene la interfaz web. Para levantar o revisar el frontend se debe usar el repositorio anterior.
+
 ## 3. Requerimientos Funcionales
 
 | ID | Requerimiento | Estado |
