@@ -18,6 +18,10 @@ GET {{ baseUrl }}/healthd
 GET {{ baseUrl }}/paises
 
 
+### Acerca de la API, endpoint publico
+GET {{ baseUrl }}/api/v1/acerca
+
+
 ### Login correcto
 # @name loginClinica
 POST http://localhost:3000/api/v1/auth/login
@@ -40,6 +44,84 @@ Authorization: Bearer {{loginClinica.response.body.token}}
 ### Ruta privada: alternativa manual, copiar token en @token arriba
 GET {{ baseUrl }}/api/v1/auth/perfil
 Authorization: Bearer {{token}}
+
+
+### Pacientes: listar sin token, debe responder 401
+GET {{ baseUrl }}/api/v1/pacientes
+
+### Pacientes: listar con token, debe responder 200
+GET {{ baseUrl }}/api/v1/pacientes
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Pacientes: obtener por id, debe responder 200
+GET {{ baseUrl }}/api/v1/pacientes/1
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Pacientes: obtener id inexistente, debe responder 404
+GET {{ baseUrl }}/api/v1/pacientes/999
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Pacientes: crear, debe responder 201
+# @name crearPaciente
+POST {{ baseUrl }}/api/v1/pacientes
+Content-Type: application/json
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+{
+  "nombre": "Valentina Perez",
+  "rut": "20.111.222-3",
+  "edad": 29,
+  "telefono": "+56911112222",
+  "email": "valentina.perez@example.com",
+  "diagnostico": "Examen preventivo",
+  "previsional": "Fonasa"
+}
+
+### Pacientes: crear con campos faltantes, debe responder 400
+POST {{ baseUrl }}/api/v1/pacientes
+Content-Type: application/json
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+{
+  "nombre": "Paciente Incompleto",
+  "rut": "21.222.333-4"
+}
+
+### Pacientes: actualizar, debe responder 200
+PUT {{ baseUrl }}/api/v1/pacientes/1
+Content-Type: application/json
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+{
+  "nombre": "Camila Rojas Actualizada",
+  "rut": "12.345.678-9",
+  "edad": 35,
+  "telefono": "+56912345678",
+  "email": "camila.rojas@example.com",
+  "diagnostico": "Control general actualizado",
+  "previsional": "Fonasa"
+}
+
+### Pacientes: actualizar id inexistente, debe responder 404
+PUT {{ baseUrl }}/api/v1/pacientes/999
+Content-Type: application/json
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+{
+  "nombre": "No Existe",
+  "rut": "99.999.999-9",
+  "edad": 50,
+  "diagnostico": "Sin registro"
+}
+
+### Pacientes: eliminar, debe responder 200
+DELETE {{ baseUrl }}/api/v1/pacientes/2
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Pacientes: eliminar id inexistente, debe responder 404
+DELETE {{ baseUrl }}/api/v1/pacientes/999
+Authorization: Bearer {{loginClinica.response.body.token}}
+
 
 ### PaSo 5 y 6 errores Faltan campos
 POST http://localhost:3000/api/v1/auth/login

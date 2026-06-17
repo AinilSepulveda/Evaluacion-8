@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./src/routes/auth.routes.js";
+import acercaRoutes from "./src/routes/acerca.routes.js";
+import pacienteRoutes from "./src/routes/paciente.routes.js";
 import testRoutes from "./src/routes/test.routes.js";
 import healthRoutes from "./src/routes/health.routes.js";
 import { errorHandler } from "./src/middlewares/error.middleware.js";
@@ -45,6 +47,8 @@ app.get("/paises", async (req, res, next) => {
 
 // Registrando authRoutes
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/acerca", acercaRoutes);
+app.use("/api/v1/pacientes", pacienteRoutes);
 
 // // Middleware 404
 app.use(unknownEndpoint);
