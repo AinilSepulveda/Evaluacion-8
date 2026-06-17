@@ -13,6 +13,13 @@ export const obtenerAcerca = (req, res) => {
         "POST /api/v1/pacientes",
         "PUT /api/v1/pacientes/:id",
         "DELETE /api/v1/pacientes/:id",
+        "GET /api/v1/medicos",
+        "GET /api/v1/medicos/:id",
+        "POST /api/v1/medicos",
+        "PUT /api/v1/medicos/:id",
+        "DELETE /api/v1/medicos/:id",
+        "GET /api/v1/examenes",
+        "POST /api/v1/examenes",
       ],
     },
   });

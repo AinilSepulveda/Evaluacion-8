@@ -123,6 +123,118 @@ DELETE {{ baseUrl }}/api/v1/pacientes/999
 Authorization: Bearer {{loginClinica.response.body.token}}
 
 
+### Medicos: listar sin token, debe responder 401
+GET {{ baseUrl }}/api/v1/medicos
+
+### Medicos: listar con token, debe responder 200
+GET {{ baseUrl }}/api/v1/medicos
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Medicos: obtener por id, debe responder 200
+GET {{ baseUrl }}/api/v1/medicos/1
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Medicos: obtener id inexistente, debe responder 404
+GET {{ baseUrl }}/api/v1/medicos/999
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Medicos: crear, debe responder 201
+# @name crearMedico
+POST {{ baseUrl }}/api/v1/medicos
+Content-Type: application/json
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+{
+  "nombre": "Dra. Natalia Vega",
+  "especialidad": "Pediatria",
+  "email": "natalia.vega@clinica.dev",
+  "telefono": "+56977778888",
+  "registroMedico": "RM-1003"
+}
+
+### Medicos: crear con campos faltantes, debe responder 400
+POST {{ baseUrl }}/api/v1/medicos
+Content-Type: application/json
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+{
+  "nombre": "Medico Incompleto",
+  "email": "incompleto@clinica.dev"
+}
+
+### Medicos: actualizar, debe responder 200
+PUT {{ baseUrl }}/api/v1/medicos/1
+Content-Type: application/json
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+{
+  "nombre": "Dra. Paula Fernandez Actualizada",
+  "especialidad": "Medicina Familiar",
+  "email": "paula.fernandez@clinica.dev",
+  "telefono": "+56933334444",
+  "registroMedico": "RM-1001"
+}
+
+### Medicos: actualizar id inexistente, debe responder 404
+PUT {{ baseUrl }}/api/v1/medicos/999
+Content-Type: application/json
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+{
+  "nombre": "No Existe",
+  "especialidad": "Traumatologia",
+  "email": "no.existe@clinica.dev",
+  "registroMedico": "RM-9999"
+}
+
+### Medicos: eliminar, debe responder 200
+DELETE {{ baseUrl }}/api/v1/medicos/2
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Medicos: eliminar id inexistente, debe responder 404
+DELETE {{ baseUrl }}/api/v1/medicos/999
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+
+### Examenes: listar sin token, debe responder 401
+GET {{ baseUrl }}/api/v1/examenes
+
+### Examenes: listar con token, debe responder 200
+GET {{ baseUrl }}/api/v1/examenes
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Examenes: subir PDF, debe responder 201
+POST {{ baseUrl }}/api/v1/examenes
+Authorization: Bearer {{loginClinica.response.body.token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="archivo"; filename="examen-prueba.pdf"
+Content-Type: application/pdf
+
+< ./examen-prueba.pdf
+--boundary--
+
+### Examenes: subir archivo no PDF, debe responder 400
+POST {{ baseUrl }}/api/v1/examenes
+Authorization: Bearer {{loginClinica.response.body.token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="archivo"; filename="package.json"
+Content-Type: application/json
+
+< ../package.json
+--boundary--
+
+### Examenes: subir sin archivo, debe responder 400
+POST {{ baseUrl }}/api/v1/examenes
+Authorization: Bearer {{loginClinica.response.body.token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary--
+
+
 ### PaSo 5 y 6 errores Faltan campos
 POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
