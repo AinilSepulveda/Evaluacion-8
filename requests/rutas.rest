@@ -1,0 +1,69 @@
+@baseUrl = http://localhost:3000
+@token = pegar_token_aqui
+
+###
+GET {{ baseUrl }}
+
+###
+GET {{ baseUrl }}/test
+
+###
+GET {{ baseUrl }}/health
+
+
+### Middleware no encontrado
+GET {{ baseUrl }}/healthd
+
+###
+GET {{ baseUrl }}/paises
+
+
+### Login correcto
+# @name loginClinica
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@clinica.dev",
+  "password": "123456"
+}
+
+
+
+### Ruta privada: probar sin token, debe responder 401
+GET {{ baseUrl }}/api/v1/auth/perfil
+
+### Ruta privada: probar con token automatico del login, debe responder 200
+GET {{ baseUrl }}/api/v1/auth/perfil
+Authorization: Bearer {{loginClinica.response.body.token}}
+
+### Ruta privada: alternativa manual, copiar token en @token arriba
+GET {{ baseUrl }}/api/v1/auth/perfil
+Authorization: Bearer {{token}}
+
+### PaSo 5 y 6 errores Faltan campos
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@clinica.dev"
+}
+
+### PaSo 5 y 6 errores Usuario incorrecto
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "otro@clinica.dev",
+  "password": "123456"
+}
+
+
+### PaSo 5 y 6 errores Password incorrecta
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@clinica.dev",
+  "password": "abc"
+}
